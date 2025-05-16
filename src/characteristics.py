@@ -14,8 +14,12 @@ def calculate_triangles(graph: List[List[int]]) -> int:
     n_triangles = 0
 
     for i, _ in enumerate(graph):
-        for j, _ in enumerate(graph[i + 1 :]):
-            for k, _ in enumerate(graph[j + 1 :]):
+        for j, _ in enumerate(graph):
+            if j <= i:
+                continue
+            for k, _ in enumerate(graph):
+                if k <= j:
+                    continue
                 if graph[i][j] and graph[i][k] and graph[j][k]:
                     n_triangles += 1
 
