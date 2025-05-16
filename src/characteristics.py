@@ -24,3 +24,14 @@ def calculate_triangles(graph: List[List[int]]) -> int:
                     n_triangles += 1
 
     return n_triangles
+
+def calculate_max_deg(graph: List[List[int]]) -> int:
+    """
+    Fuction counts max vertex degree in given graph.
+
+    graph: 2-dimentional adjacency matrix.
+    """
+    
+    return max([sum(nodes) for nodes in graph])
+    
+    
