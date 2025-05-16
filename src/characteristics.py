@@ -24,3 +24,25 @@ def calculate_triangles(graph: List[List[int]]) -> int:
                     n_triangles += 1
 
     return n_triangles
+
+
+def calculate_chromatic_number(vertices: List[float], dist: float) -> int:
+    """
+    Fuction caclulates chromatic number of distance graph.
+
+    vertices: list of float values (= samples from some distribution).
+    dist: distance threshold value.
+    """
+    events = []
+    for vertex in vertices:
+        events.append((vertex - dist / 2, 1))
+        events.append((vertex + dist / 2, -1))
+    events = sorted(events, key=lambda x: (x[0], -x[1]))
+
+    max_num_colors = 0
+    current_num_color = 0
+    for event in events:
+        current_num_color += event[1]
+        max_num_colors = max(max_num_colors, current_num_color)
+
+    return max_num_colors
