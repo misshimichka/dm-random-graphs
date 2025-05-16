@@ -22,4 +22,4 @@ jobs:
       - name: Install pylint
         run: pip install pylint
       - name: Run pylint
-        run: find . -type f -name "*.py" | xargs pylint
+        run: find . -type f -name "*.py" | xargs -r pylint
