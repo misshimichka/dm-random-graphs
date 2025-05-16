@@ -16,13 +16,15 @@ def build_knn_graph(vertices: List[float], k: int) -> List[List[int]]:
 
     neighbours = [[] for _ in range(len(vertices))]
     for i, value_i in enumerate(vertices):
-        for j, value_j in enumerate(vertices[i + 1 :]):
+        for j, value_j in enumerate(vertices):
+            if j <= i:
+                continue
             neighbours[i].append((j, abs(value_i - value_j)))
             neighbours[j].append((i, abs(value_i - value_j)))
-        neighbours[i].sort(key=lambda x: x[1])
+        neighbours[i].sort(key=lambda x: (x[1], x[0]))
 
     graph = [[0 for _ in range(len(vertices))] for _ in range(len(vertices))]
-    for i in range(len(vertices)):
+    for i, _ in enumerate(vertices):
         for j in range(k):
             graph[i][neighbours[i][j][0]] = graph[neighbours[i][j][0]][i] = 1
 
@@ -38,7 +40,9 @@ def build_dist_graph(vertices: List[float], dist: float) -> List[List[int]]:
     """
     graph = [[0 for _ in range(len(vertices))] for _ in range(len(vertices))]
     for i, value_i in enumerate(vertices):
-        for j, value_j in enumerate(vertices[i + 1 :]):
+        for j, value_j in enumerate(vertices):
+            if j <= i:
+                continue
             if abs(value_i - value_j) <= dist:
                 graph[i][j] = graph[j][i] = 1
 
