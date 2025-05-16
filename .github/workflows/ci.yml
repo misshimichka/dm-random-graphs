@@ -23,3 +23,9 @@ jobs:
         run: pip install pylint
       - name: Run pylint
         run: find . -type f -name "*.py" | xargs -r pylint
+      - name: Run setup scripts
+        run: pip install -e .
+      - name: Install pytest
+        run: pip install pytest
+      - name: Run unit tests
+        run: chmod +x ./scripts/test.sh && ./scripts/test.sh
