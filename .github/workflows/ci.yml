@@ -24,7 +24,7 @@ jobs:
       - name: Run pylint
         run: find . -type f -name "*.py" | xargs -r pylint
       - name: Run setup scripts
-        run: python setup.py
+        run: pip install -e .
       - name: Install pytest
         run: pip install pytest
       - name: Run unit tests
