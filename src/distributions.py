@@ -39,7 +39,7 @@ def lognormal_distribution(s: float, n: int, rs: int = None) -> np.ndarray:
     rs: seed for random number generation.
     """
 
-    return lognorm.rvs(scale=s, size=n, random_state=rs)
+    return np.random.lognormal(mean=0, sigma=s, size=n)
 
 
 def exp_distribution(lmb: float, n: int, rs: int = None) -> np.ndarray:
