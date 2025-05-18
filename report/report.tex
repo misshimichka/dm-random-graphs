@@ -1,0 +1,45 @@
+\documentclass{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1,T2A]{fontenc}
+\usepackage[english,russian]{babel}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{upgreek}
+\usepackage{amssymb}
+\usepackage{wasysym}
+\usepackage{graphicx}
+\usepackage{amsthm}
+\usepackage{hyperref}
+
+\title{Проект по случайным графам}
+\author{Чегодаева Таисия и Купряков Дмитрий, ПАДИИ, 2 курс}
+
+\begin{document}
+\maketitle
+
+\part{Исследование свойств характеристики.}
+\chapter{Исследовать, как ведет себя числовая характеристика $\tau$ в зависимости от параметров распределений $\theta$ и $\nu$, зафиксировав размер выборки и параметр процедуры построения графа.}
+\section{Характеристика $\tau^{KNN}$.}
+\subsection{Распределение LogNormal с $\mu$ = 0 и параметром $\theta$.}
+Зафиксируем размер выборки $n = 100$ и количество соседей $k = 5$. Число итераций для метода Монте-Карло равно 1000.
+\newline
+\newline
+Будем перебирать $\theta = \{0.001, 0.01, 0.1, 1, 2, 5, 10, 15, 20, 25, 30, 40, 50, 75, 100\}$.
+\newline
+\newline
+Результаты показали (см. \href{knn\_lognormal\_fixed\_graph\_parameters.png}{картинку}), что усредненная характеристика $\tau^{KNN}$ при $\theta \in [1, + \infty)$ принимает значения $\in [194, + \infty)$, а на $[0, 1]$ колеблется в окрестности числа 189.
+
+\subsection{Распределение Exp с параметром $\lambda$.}
+Зафиксируем размер выборки $n = 100$ и количество соседей $k = 5$. Число итераций для метода Монте-Карло равно 1000.
+\newline
+\newline
+Будем перебирать $\nu = \{0.0001, 0.001, 0.01, 0.1, 1, 2, 5, 10, 15, 20, 25, 30, 50, 75, 100\}$.
+\newline
+\newline
+Результаты показали (см. \href{knn\_exp\_fixed\_graph\_parameters.png}{картинку}), что усредненная характеристика $\tau^{KNN}$ принимает значения в окрестности числа 189 независимо от параметра $\nu$.
+\newline
+\newline
+\newline
+Остальное запишу завтра, жаворонок хочет спатеньки...
+
+\end{document}
