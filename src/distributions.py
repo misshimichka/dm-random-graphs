@@ -2,7 +2,7 @@
 Functions to generate samples from different distributions.
 """
 
-from scipy.stats import skewnorm, lognorm, expon
+from scipy.stats import skewnorm, expon
 import numpy as np
 
 
