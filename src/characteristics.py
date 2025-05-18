@@ -47,14 +47,15 @@ def calculate_chromatic_number(vertices: List[float], dist: float) -> int:
 
     return max_num_colors
 
+
 def calculate_max_deg(graph: List[List[int]]) -> int:
     """
     Fuction counts max vertex degree in given graph.
 
     graph: 2-dimentional adjacency matrix.
     """
-    
     return max([sum(nodes) for nodes in graph]) if graph else 0
+   
     
 def calculate_size_mis(graph: List[List[int]]) -> int:
     """
@@ -62,7 +63,6 @@ def calculate_size_mis(graph: List[List[int]]) -> int:
 
     graph: 2-dimentional adjacency matrix.
     """
-    
     n = len(graph)
     remaining_vertices = set(range(n))
     mis_size = 0
@@ -79,8 +79,10 @@ def calculate_size_mis(graph: List[List[int]]) -> int:
         
         mis_size += 1
         
-        neighbors = {u for u in remaining_vertices if graph[min_degree_v][u] == 1}
+        neighbors = {u for u in remaining_vertices \
+            if graph[min_degree_v][u] == 1}
         remaining_vertices -= {min_degree_v} | neighbors
     
     return mis_size
+
     
