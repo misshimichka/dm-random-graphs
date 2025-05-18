@@ -6,9 +6,7 @@ from scipy.stats import skewnorm, lognorm, expon
 import numpy as np
 
 
-def skewnormal_distribution(alpha: float,
-                            n: int,
-                            random_state: int = None) -> np.ndarray:
+def skewnormal_distribution(alpha: float, n: int, random_state: int = None) -> np.ndarray:
     """
     Fuction generate sample from skewnormal distribution.
 
@@ -17,7 +15,7 @@ def skewnormal_distribution(alpha: float,
     random_state: seed for random number generation.
     """
 
-    return skewnorm.rvs(a=0, size=n, random_state=random_state)
+    return skewnorm.rvs(a=alpha, size=n, random_state=random_state)
 
 
 def normal_distribution(s: float, n: int, rs: int = None) -> np.ndarray:

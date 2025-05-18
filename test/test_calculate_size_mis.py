@@ -39,9 +39,9 @@ def test_fully_connected_graph():
     """
     Test calculation on fully-connected graph.
     """
-    graph = [[0, 1, 1, 1]
-             [1, 0, 1, 1]
-             [1, 1, 0, 1]
+    graph = [[0, 1, 1, 1],
+             [1, 0, 1, 1],
+             [1, 1, 0, 1],
              [1, 1, 1, 0]]
     expected = 1
     assert calculate_size_mis(graph) == expected

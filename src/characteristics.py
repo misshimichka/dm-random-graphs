@@ -54,7 +54,7 @@ def calculate_max_deg(graph: List[List[int]]) -> int:
 
     graph: 2-dimentional adjacency matrix.
     """
-    return max([sum(nodes) for nodes in graph]) if graph else 0
+    return max(sum(nodes) for nodes in graph) if graph else 0
 
 
 def calculate_size_mis(graph: List[List[int]]) -> int:
