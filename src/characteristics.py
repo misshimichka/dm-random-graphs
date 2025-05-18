@@ -55,8 +55,8 @@ def calculate_max_deg(graph: List[List[int]]) -> int:
     graph: 2-dimentional adjacency matrix.
     """
     return max([sum(nodes) for nodes in graph]) if graph else 0
-   
-    
+
+
 def calculate_size_mis(graph: List[List[int]]) -> int:
     """
     Function calculates size of max independent set in distance graph.
@@ -66,23 +66,21 @@ def calculate_size_mis(graph: List[List[int]]) -> int:
     n = len(graph)
     remaining_vertices = set(range(n))
     mis_size = 0
-    
+
     while remaining_vertices:
         min_degree = n+1
         min_degree_v = -1
-        
+
         for v in remaining_vertices:
             degree = sum(graph[v][u] for u in remaining_vertices)
             if degree < min_degree:
                 min_degree = degree
                 min_degree_v = v
-        
-        mis_size += 1
-        
-        neighbors = {u for u in remaining_vertices \
-            if graph[min_degree_v][u] == 1}
-        remaining_vertices -= {min_degree_v} | neighbors
-    
-    return mis_size
 
-    
+        mis_size += 1
+
+        neighbors = {u for u in remaining_vertices
+                     if graph[min_degree_v][u] == 1}
+        remaining_vertices -= {min_degree_v} | neighbors
+
+    return mis_size
