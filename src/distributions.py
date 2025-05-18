@@ -18,7 +18,7 @@ def skewnormal_distribution(alpha: float, n: int, random_state: int = None) -> n
     return skewnorm.rvs(a=alpha, size=n, random_state=random_state)
 
 
-def normal_distribution(s: float, n: int, rs: int = None) -> np.ndarray:
+def normal_distribution(s: float, n: int) -> np.ndarray:
     """
     Fuction generate sample from skewnormal distribution.
 
@@ -27,10 +27,10 @@ def normal_distribution(s: float, n: int, rs: int = None) -> np.ndarray:
     rs: seed for random number generation.
     """
 
-    return np.random.normal(scale=s, size=n, random_state=rs)
+    return np.random.normal(scale=s, size=n)
 
 
-def lognormal_distribution(s: float, n: int, rs: int = None) -> np.ndarray:
+def lognormal_distribution(s: float, n: int) -> np.ndarray:
     """
     Fuction generate sample from skewnormal distribution.
 
