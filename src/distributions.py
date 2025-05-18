@@ -20,43 +20,37 @@ def skewnormal_distribution(alpha: float,
     return skewnorm.rvs(a=0, size=n, random_state=random_state)
 
 
-def normal_distribution(sigma: float,
-                        n: int,
-                        random_state: int = None) -> np.ndarray:
+def normal_distribution(s: float, n: int, rs: int = None) -> np.ndarray:
     """
     Fuction generate sample from skewnormal distribution.
 
-    sigma: standard diviation parameter.
+    s: standard diviation parameter.
     n: number of values in sample.
-    random_state: seed for random number generation.
+    rs: seed for random number generation.
     """
 
-    return np.random.normal(scale=sigma, size=n, random_state=random_state)
+    return np.random.normal(scale=s, size=n, random_state=rs)
 
 
-def lognormal_distribution(sigma: float,
-                           n: int,
-                           random_state: int = None) -> np.ndarray:
+def lognormal_distribution(s: float, n: int, rs: int = None) -> np.ndarray:
     """
     Fuction generate sample from skewnormal distribution.
 
-    sigma: standard diviation parameter.
+    s: standard diviation parameter.
     n: number of values in sample.
-    random_state: seed for random number generation.
+    rs: seed for random number generation.
     """
 
-    return lognorm.rvs(scale=sigma, size=n, random_state=random_state)
+    return lognorm.rvs(scale=s, size=n, random_state=rs)
 
 
-def exp_distribution(lambda_: float,
-                     n: int,
-                     random_state: int = None) -> np.ndarray:
+def exp_distribution(lmb: float, n: int, rs: int = None) -> np.ndarray:
     """
     Fuction generate sample from skewnormal distribution.
 
-    lambda: rate parameter.
+    lmd: rate parameter.
     n: number of values in sample.
-    random_state: seed for random number generation.
+    rs: seed for random number generation.
     """
 
-    return expon.rvs(scale=1/lambda_, size=n, random_state=random_state)
+    return expon.rvs(scale=1/lmb, size=n, random_state=rs)
