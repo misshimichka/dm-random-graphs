@@ -79,8 +79,11 @@ def calculate_size_mis(graph: List[List[int]]) -> int:
 
         mis_size += 1
 
-        neighbors = {u for u in remaining_vertices
-                     if graph[min_degree_v][u] == 1}
+        neighbors = set()
+        for u in remaining_vertices:
+            if graph[min_degree_v][u] == 1:
+                neighbors.add(u)
+
         remaining_vertices -= {min_degree_v} | neighbors
 
     return mis_size
