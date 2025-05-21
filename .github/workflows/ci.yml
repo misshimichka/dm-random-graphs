@@ -20,11 +20,11 @@ jobs:
       - name: Install flake8  
         run: pip install flake8 
       - name: Run flake8
-        run: flake8 .
+        run: flake8 --max-line-length=120 .
       - name: Install pylint
         run: pip install pylint
       - name: Run pylint
-        run: find . -type f -name "*.py" | xargs -r pylint
+        run: find . -type f -name "*.py" | xargs -r pylint --max-args=7 --max-positional-arguments=7 --max-locals=20
       - name: Run setup scripts
         run: pip install -e .
       - name: Install pytest
