@@ -63,8 +63,8 @@ def generate_h(distr: Callable, param: int, n_samples: int = 1000, sample_size: 
 
 
 def generate_a(
-    H0_samples: np.ndarray,
-    H1_samples: np.ndarray,
+    h0_samples: np.ndarray,
+    h1_samples: np.ndarray,
     calculation: Callable,
     graph_type: str = "knn",
     graph_param: int = 5,
