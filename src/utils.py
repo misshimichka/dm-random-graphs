@@ -1,7 +1,7 @@
 """
 Functions to build graphs based on samples from some distribution and generate sets.
 """
-from typing import List, Tuple, Callable, Dict, Union
+from typing import List, Tuple, Callable
 from collections import defaultdict
 import numpy as np
 
@@ -50,22 +50,22 @@ def build_dist_graph(vertices: List[float], dist: float) -> List[List[int]]:
     return graph
 
 
-def generate_H(distribution: int, param: int, n_samples: int = 1000, sample_size: int = 100) -> np.ndarray:
+def generate_H(distr: Callable, param: int, n_samples: int = 1000, sample_size: int = 100) -> np.ndarray:
     """
     Function generates samples of given distribution.
     
-    distribution: function to generate sample of distribution
+    distr: function to generate sample of distribution
     param: param for distribution
     n_samples: number of samples
     samples_size: size of samples
     """
-    return np.array([distribution(param, sample_size) for _ in range(n_samples)])
+    return np.array([distr(param, sample_size) for _ in range(n_samples)])
 
 
 def generate_A(
     H0_samples: np.ndarray,
     H1_samples: np.ndarray,
-    calculation: int,
+    calculation: Callable,
     graph_type: str = "knn",
     graph_param: int = 5,
     alpha: float = 0.05
