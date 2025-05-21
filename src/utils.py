@@ -84,7 +84,7 @@ def generate_a(
     t_h0 = []
     t_h1 = []
 
-    for sample in H0_samples:
+    for sample in h0_samples:
         if graph_type == "knn":
             graph = build_knn_graph(sample, graph_param)
         elif graph_type == "dist":
@@ -93,7 +93,7 @@ def generate_a(
             raise ValueError("Unknown graph type")
         t_h0.append(calculation(graph))
 
-    for sample in H1_samples:
+    for sample in h1_samples:
         if graph_type == "knn":
             graph = build_knn_graph(sample, graph_param)
         elif graph_type == "dist":
