@@ -50,7 +50,7 @@ def build_dist_graph(vertices: List[float], dist: float) -> List[List[int]]:
     return graph
 
 
-def generate_H(distr: Callable, param: int, n_samples: int = 1000, sample_size: int = 100) -> np.ndarray:
+def generate_h(distr: Callable, param: int, n_samples: int = 1000, sample_size: int = 100) -> np.ndarray:
     """
     Function generates samples of given distribution.
     
@@ -62,7 +62,7 @@ def generate_H(distr: Callable, param: int, n_samples: int = 1000, sample_size: 
     return np.array([distr(param, sample_size) for _ in range(n_samples)])
 
 
-def generate_A(
+def generate_a(
     H0_samples: np.ndarray,
     H1_samples: np.ndarray,
     calculation: Callable,
@@ -81,8 +81,8 @@ def generate_A(
     alpha: max prob of error
     """
 
-    T_H0 = []
-    T_H1 = []
+    t_h0 = []
+    t_h1 = []
 
     for sample in H0_samples:
         if graph_type == "knn":
@@ -91,7 +91,7 @@ def generate_A(
             graph = build_dist_graph(sample, graph_param)
         else:
             raise ValueError("Unknown graph type")
-        T_H0.append(calculation(graph))
+        t_h0.append(calculation(graph))
 
     for sample in H1_samples:
         if graph_type == "knn":
@@ -100,25 +100,25 @@ def generate_A(
             graph = build_dist_graph(sample, graph_param)
         else:
             raise ValueError("Unknown graph type")
-        T_H1.append(calculation(graph))
+        t_h1.append(calculation(graph))
 
     freq = defaultdict(int)
-    for t in T_H0:
+    for t in t_h0:
         freq[t] += 1
-    sorted_T = sorted(freq.keys(), key=lambda x: -freq[x])
+    sorted_t = sorted(freq.keys(), key=lambda x: -freq[x])
 
-    A = set()
+    a = set()
     cur_sum = 0
-    total = len(T_H0)
+    total = len(t_h0)
 
-    for t in sorted_T:
+    for t in sorted_t:
         if cur_sum / total < 1 - alpha:
-            A.add(t)
+            a.add(t)
             cur_sum += freq[t]
         else:
             break
 
-    power = sum(1 for t in T_H1 if t not in A) / len(T_H1)
+    power = sum(1 for t in t_h1 if t not in a) / len(t_h1)
 
-    return A, power 
+    return a, power 
     
