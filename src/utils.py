@@ -1,5 +1,5 @@
 """
-Functions to build graphs based on samples from some distribution and generate sets.
+Functions to build graphs and sets based on samples from some distribution.
 """
 from typing import List, Tuple, Callable
 from collections import defaultdict
@@ -50,10 +50,12 @@ def build_dist_graph(vertices: List[float], dist: float) -> List[List[int]]:
     return graph
 
 
-def generate_h(distr: Callable, param: int, n_samples: int = 1000, sample_size: int = 100) -> np.ndarray:
+def generate_h(
+    distr: Callable, param: int, n_samples: int = 1000, sample_size: int = 100
+) -> np.ndarray:
     """
     Function generates samples of given distribution.
-    
+
     distr: function to generate sample of distribution
     param: param for distribution
     n_samples: number of samples
@@ -68,11 +70,11 @@ def generate_a(
     calculation: Callable,
     graph_type: str = "knn",
     graph_param: int = 5,
-    alpha: float = 0.05
+    alpha: float = 0.05,
 ) -> Tuple:
     """
     Function generates set A and counts `power` of this set.
-    
+
     H0_samples: samples from first distribution
     H1_samples: samples from second distribution
     calculation: function that calculates graph characteristic
@@ -87,37 +89,37 @@ def generate_a(
     for sample in h0_samples:
         if graph_type == "knn":
             graph = build_knn_graph(sample, graph_param)
+            t_h0.append(calculation(graph))
         elif graph_type == "dist":
-            graph = build_dist_graph(sample, graph_param)
+            t_h0.append(calculation(sample, graph_param))
         else:
             raise ValueError("Unknown graph type")
-        t_h0.append(calculation(graph))
 
     for sample in h1_samples:
         if graph_type == "knn":
             graph = build_knn_graph(sample, graph_param)
+            t_h1.append(calculation(graph))
         elif graph_type == "dist":
-            graph = build_dist_graph(sample, graph_param)
+            t_h1.append(calculation(sample, graph_param))
         else:
             raise ValueError("Unknown graph type")
-        t_h1.append(calculation(graph))
 
     freq = defaultdict(int)
-    for t in t_h0:
-        freq[t] += 1
+    for t_value in t_h0:
+        freq[t_value] += 1
     sorted_t = sorted(freq.keys(), key=lambda x: -freq[x])
 
-    a = set()
+    set_a = set()
     cur_sum = 0
     total = len(t_h0)
 
-    for t in sorted_t:
+    for t_value in sorted_t:
         if cur_sum / total < 1 - alpha:
-            a.add(t)
-            cur_sum += freq[t]
+            set_a.add(t_value)
+            cur_sum += freq[t_value]
         else:
             break
 
-    power = sum(1 for t in t_h1 if t not in a) / len(t_h1)
+    power = sum(1 for t in t_h1 if t not in set_a) / len(t_h1)
 
-    return a, power 
+    return set_a, power
