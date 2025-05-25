@@ -121,5 +121,6 @@ def generate_a(
             break
 
     power = sum(1 for t in t_h1 if t not in set_a) / len(t_h1)
+    error = sum(1 for t in t_h1 if t in set_a) / len(t_h1)
 
-    return set_a, power
+    return set_a, power, error
