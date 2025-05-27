@@ -4,6 +4,15 @@ Functions to build graphs and sets based on samples from some distribution.
 from typing import List, Tuple, Callable
 from collections import defaultdict
 import numpy as np
+import pandas as pd
+from tqdm import trange
+
+
+from src.characteristics import (
+    calculate_chromatic_number,
+    calculate_max_deg,
+    calculate_triangles,
+)
 
 
 def build_knn_graph(vertices: List[float], k: int) -> List[List[int]]:
@@ -124,3 +133,40 @@ def generate_a(
     error = sum(1 for t in t_h1 if t in set_a) / len(t_h1)
 
     return set_a, power, error
+
+
+def build_dataset(
+    distribution_1: Callable,
+    distribution_2: Callable,
+    d1_param: float,
+    d2_param: float,
+    dataset_size: int,
+    n_samples: int,
+    dist: float,
+) -> pd.DataFrame:
+    """
+    Function builds dataset based on given dataset parameters.
+
+    dataset_size: size of dataset.
+    n_samples: number of values in one sample of distribution.
+    dist: distance to build distance graph.
+    """
+    result = {"n_triangles": [], "chr_number": [], "max_deg": [], "class": []}
+
+    for _ in trange(dataset_size):
+        vertices = distribution_1(d1_param, n_samples)
+        dist_graph = build_dist_graph(vertices, dist)
+        result["n_triangles"].append(calculate_triangles(dist_graph))
+        result["chr_number"].append(calculate_chromatic_number(vertices, dist))
+        result["max_deg"].append(calculate_max_deg(dist_graph))
+        result["class"].append(0)
+
+        vertices = distribution_2(d2_param, n_samples)
+        dist_graph = build_dist_graph(vertices, dist)
+        result["n_triangles"].append(calculate_triangles(dist_graph))
+        result["chr_number"].append(calculate_chromatic_number(vertices, dist))
+        result["max_deg"].append(calculate_max_deg(dist_graph))
+        result["class"].append(1)
+
+    result = pd.DataFrame(result, index=None)
+    return result
