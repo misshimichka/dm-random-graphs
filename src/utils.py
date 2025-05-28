@@ -6,7 +6,7 @@ from collections import defaultdict
 import pandas as pd
 import numpy as np
 from tqdm import trange
-from .characteristics import *
+from .characteristics import calculate_triangles, calculate_max_deg, calculate_chromatic_number, calculate_size_mis
 
 
 def build_knn_graph(vertices: List[float], k: int) -> List[List[int]]:
@@ -56,7 +56,7 @@ def build_dist_graph(vertices: List[float], dist: float) -> List[List[int]]:
 def generate_h(distr: Callable, param: int, n_samples: int = 1000, sample_size: int = 100) -> np.ndarray:
     """
     Function generates samples of given distribution.
-    
+
     distr: function to generate sample of distribution
     param: param for distribution
     n_samples: number of samples
@@ -75,7 +75,7 @@ def generate_a(
 ) -> Tuple:
     """
     Function generates set A and counts `power` of this set.
-    
+
     H0_samples: samples from first distribution
     H1_samples: samples from second distribution
     calculation: function that calculates graph characteristic
@@ -123,7 +123,8 @@ def generate_a(
 
     power = sum(1 for t in t_h1 if t not in a) / len(t_h1)
 
-    return a, power 
+    return a, power
+
 
 def build_dataset(
     distribution_1: Callable,
