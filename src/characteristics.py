@@ -15,7 +15,7 @@ def calculate_triangles(graph: List[List[int]]) -> int:
 
     for i, _ in enumerate(graph):
         for j, _ in enumerate(graph):
-            if j <= i:
+            if j <= i or (not graph[i][j]):
                 continue
             for k, _ in enumerate(graph):
                 if k <= j:
