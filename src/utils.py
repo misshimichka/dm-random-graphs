@@ -3,7 +3,10 @@ Functions to build graphs based on samples from some distribution and generate s
 """
 from typing import List, Tuple, Callable
 from collections import defaultdict
+import pandas as pd
 import numpy as np
+from tqdm import trange
+from .characteristics import *
 
 
 def build_knn_graph(vertices: List[float], k: int) -> List[List[int]]:
@@ -121,4 +124,54 @@ def generate_a(
     power = sum(1 for t in t_h1 if t not in a) / len(t_h1)
 
     return a, power 
-    
+
+def build_dataset(
+    distribution_1: Callable,
+    distribution_2: Callable,
+    d1_param: float,
+    d2_param: float,
+    dataset_size: int,
+    n_samples: int,
+    g_type: str,
+    g_par: float,
+) -> pd.DataFrame:
+    """
+    Function builds dataset based on given dataset parameters.
+
+    dataset_size: size of dataset.
+    n_samples: number of values in one sample of distribution.
+    g_type: graph type -- "dist" or "knn"
+    g_par: param to build graph.
+    """
+    if g_type == "dist":
+        result = {"n_triangles": [], "chr_number": [], "max_deg": [], "class": []}
+    elif g_type == "knn":
+        result = {"n_triangles": [], "mis_size": [], "max_deg": [], "class": []}
+    else:
+        raise ValueError("Unknown graph type")
+
+    for _ in trange(dataset_size):
+        vertices = distribution_1(d1_param, n_samples)
+        if g_type == "dist":
+            graph = build_dist_graph(vertices, g_par)
+            result["chr_number"].append(calculate_chromatic_number(vertices, g_par))
+        else:
+            graph = build_knn_graph(vertices, g_par)
+            result["mis_size"].append(calculate_size_mis(graph))
+        result["n_triangles"].append(calculate_triangles(graph))
+        result["max_deg"].append(calculate_max_deg(graph))
+        result["class"].append(0)
+
+        vertices = distribution_2(d2_param, n_samples)
+        if g_type == "dist":
+            graph = build_dist_graph(vertices, g_par)
+            result["chr_number"].append(calculate_chromatic_number(vertices, g_par))
+        else:
+            graph = build_knn_graph(vertices, g_par)
+            result["mis_size"].append(calculate_size_mis(graph))
+        result["n_triangles"].append(calculate_triangles(graph))
+        result["max_deg"].append(calculate_max_deg(graph))
+        result["class"].append(1)
+
+    result = pd.DataFrame(result, index=None)
+    return result
