@@ -103,7 +103,7 @@ def generate_a(
             t_h0.append(calculation(sample, graph_param))
         else:
             raise ValueError("Unknown graph type")
-
+        
     for sample in h1_samples:
         if graph_type == "knn":
             graph = build_knn_graph(sample, graph_param)
