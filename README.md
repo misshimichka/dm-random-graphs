@@ -14,3 +14,16 @@
 - Линтер: `flake8`, `pylint`
 - Форматтер: `black`
 - Модульное тестирование: `pytest`
+
+## Техническая документация
+Файл [report/DOCUMENTATION.md](https://github.com/misshimichka/dm-random-graphs/blob/main/report/DOCUMENTATION.md)
+
+## Отчет по экспериментам
+Файл [report/report.pdf](https://github.com/misshimichka/dm-random-graphs/blob/main/report/report.pdf)
+
+## Структура репозитория
+- `experiments` -- папка с `*.ipynb` ноутбуками с проделанными экспериментами
+- `report` -- папка с технической документацией, отчетом и исходниками отчета
+- `scripts` -- папка со служебными `*.sh` скриптами
+- `src` -- папка с исходным кодом полезных функций
+- `test` -- папка с модульными тестами
