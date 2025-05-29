@@ -308,4 +308,175 @@ $$\alpha(G) = n - \chi(G),$$
 \end{itemize}
 Но в общем и целом все получилось, точность высокая у всех алгоритмов!
 
+\chapter{Часть Дмитрия}
+
+\section{Исследование важности характеристик, как признаков классификации и изучение важности характеристик с ростом $n$.}
+
+Для исследований в этой части генерировались наборы данных размера 1000 для значений $n = 10, 25, 50, 100, 150$.\\
+
+Для подсчета характеристик использовался дистанционный граф с параметром $dist = 2$.\\
+
+Используемые характеристики:
+\begin{itemize}
+    \item число треугольников.
+    \item хроматическое число графа.
+    \item максимальная степень вершины.
+\end{itemize}
+\newpage
+
+\subsection{Распределение и корреляция признаков при $n = 10$}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.4\linewidth]{n_10_h0_dist.png}
+    \centering
+    \includegraphics[width=0.4\linewidth]{n_10_h1_dist.png}
+    \centering
+    \includegraphics[width=0.4\linewidth]{n_10_common_dist.png}
+\end{figure}
+
+Как можем видеть, распределение характеристик почти не различимы, но некоторые особенности наблюдаются, например, значения характеристик для $H_0$ имеют большую частоту, это имеет смысл, ведь $H_0$ -- это сдвинутое нормальное распределение вправо, в дальнейших частях это смещение будет наблюдаться ещё сильнее.\\
+
+Посмотрим на зависимость характеристик:
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.4\linewidth]{n_10_corr.png}
+    \centering
+    \includegraphics[width=0.4\linewidth]{n_10_extra_corr.png}
+\end{figure}
+
+Как можем заметить, все характеристики имеют высокую корреляцию между друг другом, а между целевым значением (гипотеза $H_0$ или $H_1$) наблюдается умеренная обратная корреляция, но самой коррелируемой характеристикой является число треугольников. Так же были рассмотрены дополнительные характеристики, но они повышения зависимости не дали.
+
+\newpage
+\subsection{Распределение и корреляция признаков при $n = 25$}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.4\linewidth]{n_25_h0_dist.png}
+    \centering
+    \includegraphics[width=0.4\linewidth]{n_25_h1_dist.png}
+    \centering
+    \includegraphics[width=0.4\linewidth]{n_25_common_dist.png}
+\end{figure}
+
+Здесь наблюдается ещё большее разделение значений, ещё большее смещение и рост значений.\\
+
+Посмотрим на зависимость характеристик:
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.4\linewidth]{n_25_corr.png}
+    \centering
+    \includegraphics[width=0.4\linewidth]{n_25_extra_corr.png}
+\end{figure}
+
+Наблюдается рост зависимостей между характеристиками и целевым значением.
+
+\newpage
+\subsection{Распределение и корреляция признаков при $n = 50$}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.4\linewidth]{n_50_h0_dist.png}
+    \centering
+    \includegraphics[width=0.4\linewidth]{n_50_h1_dist.png}
+    \centering
+    \includegraphics[width=0.4\linewidth]{n_50_common_dist.png}
+\end{figure}\\
+
+Посмотрим на зависимость характеристик:
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.4\linewidth]{n_50_corr.png}
+    \centering
+    \includegraphics[width=0.4\linewidth]{n_50_extra_corr.png}
+\end{figure}
+
+\newpage
+\subsection{Распределение и корреляция признаков при $n = 100$}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.4\linewidth]{n_100_h0_dist.png}
+    \centering
+    \includegraphics[width=0.4\linewidth]{n_100_h1_dist.png}
+    \centering
+    \includegraphics[width=0.4\linewidth]{n_100_common.png}
+\end{figure}\\
+
+Посмотрим на зависимость характеристик:
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.4\linewidth]{n_100_corr.png}
+    \centering
+    \includegraphics[width=0.4\linewidth]{n_100_extra_corr.png}
+\end{figure}
+
+\newpage
+\subsection{Распределение и корреляция признаков при $n = 150$}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.4\linewidth]{n_150_h0_dist.png}
+    \centering
+    \includegraphics[width=0.4\linewidth]{n_150_h1_dist.png}
+    \centering
+    \includegraphics[width=0.4\linewidth]{n_150_common_dist.png}
+\end{figure}\\
+
+Можем наблюдать еще большее и очень заметное разделение значений.
+
+Посмотрим на зависимость характеристик:
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.4\linewidth]{n_150_corr.png}
+    \centering
+    \includegraphics[width=0.4\linewidth]{n_150_extra_corr.png}
+\end{figure}
+
+Можем наблюдать высокую обратную корреляция между характеристиками и целевым значением.\\
+
+В итоге можем заметить, что с ростом размера выборки растет корреляция между характеристиками и целевым значением, и разделение между значениями, которые соответствуют разным гипотезам, становится заметнее.
+\newpage
+\section{Применение классификационных алгоритмов.}
+
+Определение гипотез можно рассмотреть как задачу классификации, а с этой задачей хорошо справляются ML-алгоритмы. 
+
+Предлагаю рассмотреть алгоритмы:
+\begin{itemize}
+    \item $k$ ближайших соседей
+    \item Логистическая регерессия
+    \item Категориальный бустинг на решающих деревьях
+\end{itemize}
+
+Рассматриваемые метрики для задачи классификации:
+\begin{itemize}
+    \item $Accuracy$
+    \item $Precision$
+    \item $Recall$
+    \item $f1-score$
+\end{itemize}
+
+Посмотрим на дисперсию метрик в зависимости от размера выборки:
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{metrics_var.png}
+\end{figure}
+
+Можем наблюдать, что с ростом размера выборки разброс значений метрик уменьшается.
+
+Посмотрим на важность признаков для каждого классификатора:
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{char_imp.png}
+\end{figure}
+
+Можем наблюдать, что абсолютно самым важным признаком для всех классификаторов является число треугольников. Действительно, из секции выше заметно, что разделение значений наиболее заметно именно на этой характеристике.
+
+\section{Вычисление ошибки первого рода, мощности и вывод}
+
+Для подсчета ошибки первого рода и мощности будет использована логистическая регрессия, т.к. она показала самую высокую точность предсказаний.
+
+Для случайного набора данных получим такие значения:
+\begin{itemize}
+    \item Ошибка первого рода $= 0.098$
+    \item Мощность $= 0.906$
+\end{itemize}
+
+В итоге получили, что с ростом размера выборки, точность растет.
+
 \end{document}
