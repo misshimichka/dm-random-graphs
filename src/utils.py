@@ -11,6 +11,7 @@ from src.characteristics import (
     calculate_chromatic_number,
     calculate_max_deg,
     calculate_triangles,
+    calculate_size_mis
 )
 
 
