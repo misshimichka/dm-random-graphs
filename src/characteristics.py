@@ -15,7 +15,7 @@ def calculate_triangles(graph: List[List[int]]) -> int:
 
     for i, _ in enumerate(graph):
         for j, _ in enumerate(graph):
-            if j <= i:
+            if j <= i or (not graph[i][j]):
                 continue
             for k, _ in enumerate(graph):
                 if k <= j:
@@ -63,27 +63,27 @@ def calculate_size_mis(graph: List[List[int]]) -> int:
 
     graph: 2-dimentional adjacency matrix.
     """
-    n = len(graph)
-    remaining_vertices = set(range(n))
+    size = len(graph)
+    remaining_v = set(range(size))
     mis_size = 0
 
-    while remaining_vertices:
-        min_degree = n+1
+    while remaining_v:
+        min_degree = size + 1
         min_degree_v = -1
 
-        for v in remaining_vertices:
-            degree = sum(graph[v][u] for u in remaining_vertices)
+        for vertex_v in remaining_v:
+            degree = sum(graph[vertex_v][vertex_u] for vertex_u in remaining_v)
             if degree < min_degree:
                 min_degree = degree
-                min_degree_v = v
+                min_degree_v = vertex_v
 
         mis_size += 1
 
         neighbors = set()
-        for u in remaining_vertices:
-            if graph[min_degree_v][u] == 1:
-                neighbors.add(u)
+        for vertex_u in remaining_v:
+            if graph[min_degree_v][vertex_u] == 1:
+                neighbors.add(vertex_u)
 
-        remaining_vertices -= {min_degree_v} | neighbors
+        remaining_v -= {min_degree_v} | neighbors
 
     return mis_size

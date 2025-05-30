@@ -6,7 +6,13 @@ from collections import defaultdict
 import pandas as pd
 import numpy as np
 from tqdm import trange
-from .characteristics import calculate_triangles, calculate_max_deg, calculate_chromatic_number, calculate_size_mis
+
+from src.characteristics import (
+    calculate_chromatic_number,
+    calculate_max_deg,
+    calculate_triangles,
+)
+
 
 
 def build_knn_graph(vertices: List[float], k: int) -> List[List[int]]:
@@ -53,7 +59,10 @@ def build_dist_graph(vertices: List[float], dist: float) -> List[List[int]]:
     return graph
 
 
-def generate_h(distr: Callable, param: int, n_samples: int = 1000, sample_size: int = 100) -> np.ndarray:
+def generate_h(
+    distr: Callable, param: int, n_samples: int = 1000, sample_size: int = 100
+) -> np.ndarray:
+
     """
     Function generates samples of given distribution.
 
@@ -72,6 +81,7 @@ def generate_a(
     graph_type: str = "knn",
     graph_param: int = 5,
     alpha: float = 0.05
+    alpha: float = 0.05,
 ) -> Tuple:
     """
     Function generates set A and counts `power` of this set.
@@ -90,40 +100,41 @@ def generate_a(
     for sample in h0_samples:
         if graph_type == "knn":
             graph = build_knn_graph(sample, graph_param)
+            t_h0.append(calculation(graph))
         elif graph_type == "dist":
-            graph = build_dist_graph(sample, graph_param)
+            t_h0.append(calculation(sample, graph_param))
         else:
             raise ValueError("Unknown graph type")
-        t_h0.append(calculation(graph))
 
     for sample in h1_samples:
         if graph_type == "knn":
             graph = build_knn_graph(sample, graph_param)
+            t_h1.append(calculation(graph))
         elif graph_type == "dist":
-            graph = build_dist_graph(sample, graph_param)
+            t_h1.append(calculation(sample, graph_param))
         else:
             raise ValueError("Unknown graph type")
-        t_h1.append(calculation(graph))
 
     freq = defaultdict(int)
-    for t in t_h0:
-        freq[t] += 1
+    for t_value in t_h0:
+        freq[t_value] += 1
     sorted_t = sorted(freq.keys(), key=lambda x: -freq[x])
 
-    a = set()
+    set_a = set()
     cur_sum = 0
     total = len(t_h0)
 
-    for t in sorted_t:
+    for t_value in sorted_t:
         if cur_sum / total < 1 - alpha:
-            a.add(t)
-            cur_sum += freq[t]
+            set_a.add(t_value)
+            cur_sum += freq[t_value]
         else:
             break
 
-    power = sum(1 for t in t_h1 if t not in a) / len(t_h1)
+    power = sum(1 for t in t_h1 if t not in set_a) / len(t_h1)
+    error = sum(1 for t in t_h1 if t in set_a) / len(t_h1)
 
-    return a, power
+    return set_a, power, error
 
 
 def build_dataset(
@@ -134,7 +145,7 @@ def build_dataset(
     dataset_size: int,
     n_samples: int,
     g_type: str,
-    g_par: float,
+    g_par: float
 ) -> pd.DataFrame:
     """
     Function builds dataset based on given dataset parameters.
