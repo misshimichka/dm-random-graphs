@@ -81,7 +81,6 @@ def generate_a(
     graph_type: str = "knn",
     graph_param: int = 5,
     alpha: float = 0.05
-    alpha: float = 0.05,
 ) -> Tuple:
     """
     Function generates set A and counts `power` of this set.
