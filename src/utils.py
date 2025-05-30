@@ -1,10 +1,10 @@
 """
-Functions to build graphs and sets based on samples from some distribution.
+Functions to build graphs based on samples from some distribution and generate sets.
 """
 from typing import List, Tuple, Callable
 from collections import defaultdict
-import numpy as np
 import pandas as pd
+import numpy as np
 from tqdm import trange
 
 from src.characteristics import (
@@ -12,6 +12,7 @@ from src.characteristics import (
     calculate_max_deg,
     calculate_triangles,
 )
+
 
 
 def build_knn_graph(vertices: List[float], k: int) -> List[List[int]]:
@@ -61,6 +62,7 @@ def build_dist_graph(vertices: List[float], dist: float) -> List[List[int]]:
 def generate_h(
     distr: Callable, param: int, n_samples: int = 1000, sample_size: int = 100
 ) -> np.ndarray:
+
     """
     Function generates samples of given distribution.
 
@@ -102,7 +104,7 @@ def generate_a(
             t_h0.append(calculation(sample, graph_param))
         else:
             raise ValueError("Unknown graph type")
-        
+
     for sample in h1_samples:
         if graph_type == "knn":
             graph = build_knn_graph(sample, graph_param)
@@ -141,30 +143,45 @@ def build_dataset(
     d2_param: float,
     dataset_size: int,
     n_samples: int,
-    dist: float,
+    g_type: str,
+    g_par: float
 ) -> pd.DataFrame:
     """
     Function builds dataset based on given dataset parameters.
 
     dataset_size: size of dataset.
     n_samples: number of values in one sample of distribution.
-    dist: distance to build distance graph.
+    g_type: graph type -- "dist" or "knn"
+    g_par: param to build graph.
     """
-    result = {"n_triangles": [], "chr_number": [], "max_deg": [], "class": []}
+    if g_type == "dist":
+        result = {"n_triangles": [], "chr_number": [], "max_deg": [], "class": []}
+    elif g_type == "knn":
+        result = {"n_triangles": [], "mis_size": [], "max_deg": [], "class": []}
+    else:
+        raise ValueError("Unknown graph type")
 
     for _ in trange(dataset_size):
         vertices = distribution_1(d1_param, n_samples)
-        dist_graph = build_dist_graph(vertices, dist)
-        result["n_triangles"].append(calculate_triangles(dist_graph))
-        result["chr_number"].append(calculate_chromatic_number(vertices, dist))
-        result["max_deg"].append(calculate_max_deg(dist_graph))
+        if g_type == "dist":
+            graph = build_dist_graph(vertices, g_par)
+            result["chr_number"].append(calculate_chromatic_number(vertices, g_par))
+        else:
+            graph = build_knn_graph(vertices, g_par)
+            result["mis_size"].append(calculate_size_mis(graph))
+        result["n_triangles"].append(calculate_triangles(graph))
+        result["max_deg"].append(calculate_max_deg(graph))
         result["class"].append(0)
 
         vertices = distribution_2(d2_param, n_samples)
-        dist_graph = build_dist_graph(vertices, dist)
-        result["n_triangles"].append(calculate_triangles(dist_graph))
-        result["chr_number"].append(calculate_chromatic_number(vertices, dist))
-        result["max_deg"].append(calculate_max_deg(dist_graph))
+        if g_type == "dist":
+            graph = build_dist_graph(vertices, g_par)
+            result["chr_number"].append(calculate_chromatic_number(vertices, g_par))
+        else:
+            graph = build_knn_graph(vertices, g_par)
+            result["mis_size"].append(calculate_size_mis(graph))
+        result["n_triangles"].append(calculate_triangles(graph))
+        result["max_deg"].append(calculate_max_deg(graph))
         result["class"].append(1)
 
     result = pd.DataFrame(result, index=None)
