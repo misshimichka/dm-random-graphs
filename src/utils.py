@@ -7,7 +7,6 @@ import numpy as np
 import pandas as pd
 from tqdm import trange
 
-
 from src.characteristics import (
     calculate_chromatic_number,
     calculate_max_deg,
@@ -79,7 +78,7 @@ def generate_a(
     calculation: Callable,
     graph_type: str = "knn",
     graph_param: int = 5,
-    alpha: float = 0.05,
+    alpha: float = 0.05
 ) -> Tuple:
     """
     Function generates set A and counts `power` of this set.
