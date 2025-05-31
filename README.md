@@ -14,6 +14,7 @@
 - Линтер: `flake8`, `pylint`
 - Форматтер: `black`
 - Модульное тестирование: `pytest`
+- type checker: `mypy`
 
 ## Техническая документация
 Файл [report/DOCUMENTATION.md](https://github.com/misshimichka/dm-random-graphs/blob/main/report/DOCUMENTATION.md)
