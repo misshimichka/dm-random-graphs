@@ -1,14 +1,15 @@
 """
 Functions to generate samples from different distributions.
 """
+from typing import Optional, Union
 
 from scipy.stats import skewnorm
 import numpy as np
 
 
 def skewnormal_distribution(
-    alpha: float, n_values: int, random_state: int = None
-) -> np.ndarray:
+    alpha: float, n_values: int, random_state: Optional[int] = None
+) -> Union[float, np.ndarray]:
     """
     Fuction generate sample from skewnormal distribution.
 
@@ -20,7 +21,7 @@ def skewnormal_distribution(
     return skewnorm.rvs(a=alpha, size=n_values, random_state=random_state)
 
 
-def normal_distribution(std: float, n_values: int) -> np.ndarray:
+def normal_distribution(std: float, n_values: int) -> Union[float, np.ndarray]:
     """
     Fuction generate sample from normal distribution.
 
@@ -31,7 +32,7 @@ def normal_distribution(std: float, n_values: int) -> np.ndarray:
     return np.random.normal(scale=std, size=n_values)
 
 
-def lognormal_distribution(std: float, n_values: int) -> np.ndarray:
+def lognormal_distribution(std: float, n_values: int) -> Union[float, np.ndarray]:
     """
     Fuction generate sample from lognormal distribution.
 
@@ -42,7 +43,7 @@ def lognormal_distribution(std: float, n_values: int) -> np.ndarray:
     return np.random.lognormal(mean=0, sigma=std, size=n_values)
 
 
-def exp_distribution(lmb: float, n_values: int) -> np.ndarray:
+def exp_distribution(lmb: float, n_values: int) -> Union[float, np.ndarray]:
     """
     Fuction generate sample from skewnormal distribution.
 

@@ -1,7 +1,7 @@
 """
-Functions to build graphs based on samples from some distribution and generate sets.
+Functions to build graphs based on samples from distribution and generate sets.
 """
-from typing import List, Tuple, Callable
+from typing import List, Tuple, Callable, Any, Dict
 from collections import defaultdict
 import pandas as pd
 import numpy as np
@@ -11,21 +11,20 @@ from src.characteristics import (
     calculate_chromatic_number,
     calculate_max_deg,
     calculate_triangles,
-    calculate_size_mis
+    calculate_size_mis,
 )
 
 
-
-def build_knn_graph(vertices: List[float], k: int) -> List[List[int]]:
+def build_knn_graph(vertices: List[float], k: Any) -> List[List[int]]:
     """
     Function builds KNN-graph.
 
     vertices: list of float numbers (= samples of some distribution).
     k: number of neighbours.
     """
-    k = min(k, len(vertices) - 1)
+    k = min(int(k), len(vertices) - 1)
 
-    neighbours = [[] for _ in range(len(vertices))]
+    neighbours: List[List[Any]] = [[] for _ in range(len(vertices))]
     for i, value_i in enumerate(vertices):
         for j, value_j in enumerate(vertices):
             if j <= i:
@@ -81,7 +80,7 @@ def generate_a(
     calculation: Callable,
     graph_type: str = "knn",
     graph_param: int = 5,
-    alpha: float = 0.05
+    alpha: float = 0.05,
 ) -> Tuple:
     """
     Function generates set A and counts `power` of this set.
@@ -115,7 +114,7 @@ def generate_a(
         else:
             raise ValueError("Unknown graph type")
 
-    freq = defaultdict(int)
+    freq: Any = defaultdict(int)
     for t_value in t_h0:
         freq[t_value] += 1
     sorted_t = sorted(freq.keys(), key=lambda x: -freq[x])
@@ -145,7 +144,7 @@ def build_dataset(
     dataset_size: int,
     n_samples: int,
     g_type: str,
-    g_par: float
+    g_par: float,
 ) -> pd.DataFrame:
     """
     Function builds dataset based on given dataset parameters.
@@ -155,6 +154,7 @@ def build_dataset(
     g_type: graph type -- "dist" or "knn"
     g_par: param to build graph.
     """
+    result: Dict[Any, List[Any]] = {}
     if g_type == "dist":
         result = {"n_triangles": [], "chr_number": [], "max_deg": [], "class": []}
     elif g_type == "knn":
@@ -185,5 +185,5 @@ def build_dataset(
         result["max_deg"].append(calculate_max_deg(graph))
         result["class"].append(1)
 
-    result = pd.DataFrame(result, index=None)
-    return result
+    data_frame = pd.DataFrame(result, index=None)
+    return data_frame
