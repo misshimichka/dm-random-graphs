@@ -24,7 +24,7 @@ jobs:
       - name: Install pylint
         run: pip install pylint
       - name: Run pylint
-        run: find . -type f -name "*.py" | xargs -r pylint --max-args=9 --max-locals=20
+        run: find . -type f -name "*.py" | xargs -r pylint --max-args=9 --max-positional-arguments=9 --max-locals=20
       - name: Install mypy
         run: pip install mypy pandas-stubs types-setuptools scipy-stubs types-tqdm
       - name: Run mypy
